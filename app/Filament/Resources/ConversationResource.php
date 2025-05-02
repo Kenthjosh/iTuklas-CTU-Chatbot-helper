@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ConversationResource\Pages;
 use App\Filament\Resources\ConversationResource\RelationManagers;
 use App\Models\Conversation;
+use App\Status;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -22,16 +23,7 @@ class ConversationResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
-                Forms\Components\DateTimePicker::make('start_time')
-                    ->required(),
-                Forms\Components\DateTimePicker::make('end_time')
-                    ->required(),
-                Forms\Components\TextInput::make('status')
-                    ->required()
-                    ->maxLength(255)
-                    ->default('active'),
-            ]);
+            ->schema(Conversation::getForm());
     }
 
     public static function table(Table $table): Table

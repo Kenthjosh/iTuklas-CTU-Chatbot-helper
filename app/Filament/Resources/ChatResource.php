@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ChatResource\Pages;
 use App\Filament\Resources\ChatResource\RelationManagers;
 use App\Models\Chat;
+use App\Models\Conversation;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -25,11 +26,13 @@ class ChatResource extends Resource
             ->schema([
                 Forms\Components\Select::make('conversation_id')
                     ->relationship('conversation', 'id')
+                    ->createOptionForm(Conversation::getForm())
+                    ->editOptionForm(Conversation::getForm())
                     ->required(),
                 Forms\Components\TextInput::make('sender')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Textarea::make('content')
+                Forms\Components\MarkdownEditor::make('content')
                     ->required()
                     ->columnSpanFull(),
                 Forms\Components\DateTimePicker::make('start_date')
