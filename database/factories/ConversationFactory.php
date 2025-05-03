@@ -5,6 +5,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use App\Models\Conversation;
+use App\Status;
 
 class ConversationFactory extends Factory
 {
@@ -23,7 +24,7 @@ class ConversationFactory extends Factory
         return [
             'start_time' => fake()->dateTime(),
             'end_time' => fake()->dateTime(),
-            'status' => fake()->word(),
+            'status' => fake()->randomElement(Status::class),
         ];
     }
 }

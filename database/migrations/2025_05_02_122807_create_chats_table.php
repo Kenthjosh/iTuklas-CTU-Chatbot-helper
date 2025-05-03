@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('sender');
             $table->text('content');
             $table->dateTime('start_date');
-            $table->dateTime('end_date');
+            $table->dateTime('end_date')->nullable();
             $table->timestamps();
         });
     }
