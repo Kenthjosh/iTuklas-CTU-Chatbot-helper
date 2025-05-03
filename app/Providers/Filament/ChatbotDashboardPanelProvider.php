@@ -18,7 +18,9 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Validation\Rules\Password;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Jeffgreco13\FilamentBreezy\BreezyCore;
 
 class ChatbotDashboardPanelProvider extends PanelProvider
 {
@@ -30,7 +32,8 @@ class ChatbotDashboardPanelProvider extends PanelProvider
             ->path('chatbot-dashboard')
             ->login()
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::hex('#FFD700'),
+                'secondary' => Color::hex('#000080')
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
@@ -55,7 +58,17 @@ class ChatbotDashboardPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+            ->plugin(
+                BreezyCore::make()
+                    ->myProfile()
+                    ->enableTwoFactorAuthentication()
+                    // ->enableBrowserSessions()
+                    ->passwordUpdateRules(
+                        rules: [Password::default()->mixedCase()->uncompromised(3)], // you may pass an array of validation rules as well. (default = ['min:8'])
+                        requiresCurrentPassword: true, // when false, the user can update their password without entering their current password. (default = true)
+                    )
+            );
     }
 
     public function register(): void

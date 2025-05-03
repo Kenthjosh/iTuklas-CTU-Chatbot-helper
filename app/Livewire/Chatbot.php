@@ -22,7 +22,7 @@ class Chatbot extends Component
         if (trim($this->newMessage) === '') return;
 
         try {
-            $conversation = Conversation::latest()->first()->id;
+            $conversation = isset(Conversation::latest()->first()->id) ? Conversation::latest()->first()->id : Conversation::factory()->create()->id;
 
             $studentMessage = Chat::create([
                 'conversation_id' => $conversation,
