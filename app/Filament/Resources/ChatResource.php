@@ -25,6 +25,7 @@ class ChatResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('conversation_id')
+
                     ->relationship('conversation', 'id')
                     ->createOptionForm(Conversation::getForm())
                     ->editOptionForm(Conversation::getForm())
@@ -51,6 +52,7 @@ class ChatResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('sender')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('content'),
                 Tables\Columns\TextColumn::make('start_date')
                     ->dateTime()
                     ->sortable(),
@@ -90,8 +92,8 @@ class ChatResource extends Resource
     {
         return [
             'index' => Pages\ListChats::route('/'),
-            'create' => Pages\CreateChat::route('/create'),
-            'edit' => Pages\EditChat::route('/{record}/edit'),
+            // 'create' => Pages\CreateChat::route('/create'),
+            // 'edit' => Pages\EditChat::route('/{record}/edit'),
         ];
     }
 }

@@ -43,12 +43,13 @@ class Chatbot extends Component
             // ]);
 
             // dd($studentMessage);
-            $this->messages[] = $studentMessage;
-            // $this->messages[] = $botReply;
-            $this->messages[] = 'Oops! Something went wrong.';
+            $this->messages[] = ['sender' => 'student', 'content' => $this->newMessage];
+            // $this->messages[] = ['sender' => 'bot', 'content' => $botReply->content];
+            $this->messages[] = ['sender' => 'bot', 'content' => 'Oops! Something went wrong.'];
         } catch (\Exception $e) {
-            $this->messages[] = $studentMessage;
-            $this->messages[] = 'Oops! Something went wrong.';
+            $this->messages[] = ['sender' => 'student', 'content' => $this->newMessage];
+            // $this->messages[] = ['sender' => 'bot', 'content' => $botReply->content];
+            $this->messages[] = ['sender' => 'bot', 'content' => 'Oops! Something went wrong.'];
         }
 
         $this->newMessage = '';

@@ -4,8 +4,8 @@
     <!-- Chat messages -->
     <div wire:poll.5s id="messages" class="flex-1 px-2 mb-4 space-y-2 overflow-y-auto">
         @foreach ($messages as $message)
-        <div class="flex {{ $message->sender === 'bot' ? 'justify-start' : 'justify-end' }}">
-            <div class="{{ $message->sender === 'bot' ? 'bg-gray-200 text-gray-800' : 'bg-blue-600 text-white' }} px-4 py-2 rounded-xl max-w-sm shadow">
+        <div class="flex {{ $message->sender == 'bot' ? 'justify-start' : 'justify-end' }}">
+            <div class="{{ $message->sender == 'bot' ? 'bg-gray-200 text-gray-800' : 'bg-blue-600 text-white' }} px-4 py-2 rounded-xl max-w-sm shadow">
                 {{ $message->content }}
             </div>
         </div>
