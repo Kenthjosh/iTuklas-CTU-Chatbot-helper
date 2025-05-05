@@ -7,6 +7,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "awcodes/overlook": "^2.2",
         "codeat3/blade-emblemicons": "^1.5",
         "codeat3/blade-humbleicons": "^1.1",
         "filament/filament": "3.3",

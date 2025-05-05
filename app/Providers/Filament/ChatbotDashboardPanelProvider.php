@@ -2,6 +2,11 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Resources\ChatResource;
+use App\Filament\Resources\ConversationResource;
+use App\Filament\Resources\UserResource;
+use Awcodes\Overlook\OverlookPlugin;
+use Awcodes\Overlook\Widgets\OverlookWidget;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -32,8 +37,12 @@ class ChatbotDashboardPanelProvider extends PanelProvider
             ->path('chatbot-dashboard')
             ->login()
             ->colors([
-                'primary' => Color::hex('#FFD700'),
-                'secondary' => Color::hex('#000080')
+                'danger' => Color::hex('#B22222'),
+                'gray' => Color::hex('#3C3C3C'),
+                'info' => Color::hex('#FFC107'),
+                'primary' => Color::hex('#800000'),
+                'success' => Color::hex('#4CAF50'),
+                'warning' => Color::hex('#FFD700'),
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
@@ -42,6 +51,7 @@ class ChatbotDashboardPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
+                // OverlookWidget::class,
                 Widgets\AccountWidget::class,
                 // Widgets\FilamentInfoWidget::class,
             ])
@@ -59,16 +69,24 @@ class ChatbotDashboardPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
-            ->plugin(
+            ->plugins([
                 BreezyCore::make()
                     ->myProfile()
                     ->enableTwoFactorAuthentication()
-                    // ->enableBrowserSessions()
                     ->passwordUpdateRules(
-                        rules: [Password::default()->mixedCase()->uncompromised(3)], // you may pass an array of validation rules as well. (default = ['min:8'])
-                        requiresCurrentPassword: true, // when false, the user can update their password without entering their current password. (default = true)
-                    )
-            );
+                        rules: [Password::default()->mixedCase()->uncompromised(3)],
+                        requiresCurrentPassword: true,
+                    ),
+                // OverlookPlugin::make()
+                //     ->abbreviateCount()
+                //     ->excludes([
+                //         UserResource::class,
+                //     ])
+                //     ->icons([
+                //         'humble-chats' => ChatResource::class,
+                //         'emblem-group-conversation-fill' => ConversationResource::class,
+                //     ]),
+            ]);
     }
 
     public function register(): void

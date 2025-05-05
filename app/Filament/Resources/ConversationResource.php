@@ -17,8 +17,18 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class ConversationResource extends Resource
 {
     protected static ?string $model = Conversation::class;
-
     protected static ?string $navigationIcon = 'emblem-group-conversation-fill';
+    protected static ?string $navigationGroup = 'Chatbot Management';
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
+    public static function getNavigationBadgeTooltip(): ?string
+    {
+        return 'The number of conversations';
+    }
 
     public static function form(Form $form): Form
     {

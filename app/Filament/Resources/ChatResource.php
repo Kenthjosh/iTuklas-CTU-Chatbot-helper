@@ -17,15 +17,24 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class ChatResource extends Resource
 {
     protected static ?string $model = Chat::class;
-
     protected static ?string $navigationIcon = 'humble-chats';
+    protected static ?string $navigationGroup = 'Chatbot Management';
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
+    public static function getNavigationBadgeTooltip(): ?string
+    {
+        return 'The number of chats';
+    }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\Select::make('conversation_id')
-
                     ->relationship('conversation', 'id')
                     ->createOptionForm(Conversation::getForm())
                     ->editOptionForm(Conversation::getForm())
@@ -33,7 +42,7 @@ class ChatResource extends Resource
                 Forms\Components\TextInput::make('sender')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\MarkdownEditor::make('content')
+                Forms\Components\RichEditor::make('content')
                     ->required()
                     ->columnSpanFull(),
                 Forms\Components\DateTimePicker::make('start_date')
